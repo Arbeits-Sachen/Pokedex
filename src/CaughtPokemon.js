@@ -1,14 +1,22 @@
 import { useState } from "react";
 
-console.log(useState);
-
 function CaughtPokemon(props)
 {
     const[caught, setCaught] = useState([]);
+    const[pokemonNameInput, setPokemonNameInput] = useState("");
 
     function catchPokemon()
     {
-        setCaught(caught.concat(props.pokemon[Math.floor(Math.random() * props.pokemon.length)]));
+        if(pokemonNameInput !== "")
+        {
+            setCaught(caught.concat(pokemonNameInput));
+            setPokemonNameInput("");
+        }
+    }
+
+    function handleInputChange(event)
+    {
+        setPokemonNameInput(event.target.value);
     }
 
     return(
@@ -20,10 +28,10 @@ function CaughtPokemon(props)
                     return <li key={index}>{item}</li>;
                 })}
             </ul>
+            <input type="text" value={pokemonNameInput} onChange={handleInputChange}/>
             <button onClick={catchPokemon}>Catch Pokemon</button>
         </div>
     )
 }
-
 
 export default CaughtPokemon;
